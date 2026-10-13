@@ -1,0 +1,100 @@
+.fo-page {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.fo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.fo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.fo-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  background: #fff;
+}
+.fo-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+.fo-badge {
+  background: #eef5ee;
+  color: #25603a;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+.fo-btn {
+  display: inline-block;
+  background: #2e9e5b;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 15px;
+}
+.fo-error {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.fo-skeleton {
+  height: 140px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #eee 25%, #f6f6f6 50%, #eee 75%);
+  background-size: 200% 100%;
+  animation: fo-shimmer 1.2s infinite;
+}
+@keyframes fo-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+.fo-empty {
+  text-align: center;
+  padding: 60px 16px;
+}
+.fo-form {
+  display: grid;
+  gap: 14px;
+  max-width: 520px;
+}
+.fo-form label {
+  display: grid;
+  gap: 4px;
+  font-size: 14px;
+}
+.fo-form input,
+.fo-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+.fo-bar {
+  height: 12px;
+  background: #e5e5e5;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.fo-bar > div {
+  height: 100%;
+}
+.fo-gauge-row {
+  margin: 12px 0;
+}
