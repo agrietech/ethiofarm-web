@@ -78,6 +78,7 @@ function toDiagnosisRecord(raw: RawDiagnosis): DiagnosisRecord {
     symptoms: raw.symptoms ?? (raw.description ? [raw.description] : []),
     treatment: toTreatment(raw),
     daEscalationStatus: raw.daEscalationStatus ?? 'NOT_ESCALATED',
+    diagnosedAt: raw.createdAt,
   };
 }
 

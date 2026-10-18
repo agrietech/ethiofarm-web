@@ -26,6 +26,8 @@ export interface DiagnosisRecord {
   symptoms: string[];
   treatment: TreatmentRecommendation;
   daEscalationStatus: DAEscalationStatus;
+  /** ISO timestamp of when the scan was made */
+  diagnosedAt: string;
 }
 
 export interface DiagnoseRequestPayload {
