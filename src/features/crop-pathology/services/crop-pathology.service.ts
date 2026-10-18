@@ -91,7 +91,7 @@ export const cropPathologyService = {
     const form = new FormData();
     form.append('image', payload.imageFile);
     form.append('cropHint', payload.cropHint);
-    form.append('farmId', payload.farmId);
+    if (payload.farmId) form.append('farmId', payload.farmId);
 
     const { data } = await apiClient.post<MaybeEnveloped<RawDiagnosis>>(`${BASE_PATH}/scan`, form, {
       headers: { 'Content-Type': 'multipart/form-data' },
