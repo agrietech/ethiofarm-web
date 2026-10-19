@@ -1,46 +1,933 @@
+/* ==========================================================================
+   AgriEtech Design System — matches mobile app theme (app_theme.dart)
+   Font: Roboto (same as Flutter app)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800&display=swap');
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: 'Roboto', system-ui, sans-serif;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  line-height: 1.5;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+  /* Brand — Lush Agricultural Palette */
+  --primary:       #2E7D32;   /* Lush Forest Green */
+  --primary-dark:  #1B5E20;   /* Deep Emerald Green */
+  --primary-light: #4CAF50;   /* Vibrant Leaf Green */
+  --primary-bg:    #E8F5E9;   /* Chip / indicator bg */
+  --secondary:     #00796B;   /* Teal */
+  --tertiary:      #E65100;   /* Amber */
+
+  /* Scaffold / Surface */
+  --bg:          #F7FAF7;
+  --surface:     #ffffff;
+  --surface-alt: #F8FBF8;
+  --border:      #e5e7eb;
+
+  /* Text */
+  --text-primary:   #1E2E1E;
+  --text-secondary: #6b7280;
+  --text-muted:     #9ca3af;
+
+  /* Risk / Severity — matches RiskBadge widget */
+  --risk-low-bg:       #DCFCE7;  --risk-low-text:       #15803D;
+  --risk-moderate-bg:  #FEF3C7;  --risk-moderate-text:  #B45309;
+  --risk-high-bg:      #FFEDD5;  --risk-high-text:      #C2410C;
+  --risk-critical-bg:  #FEE2E2;  --risk-critical-text:  #991B1B;
+
+  /* Telemetry tokens */
+  --ndvi:    #10B981;
+  --sensor:  #0284C7;
+  --locust:  #DC2626;
+  --drought: #F59E0B;
+  --flood:   #3B82F6;
+
+  /* System */
+  --error:   #D32F2F;
+  --warning: #F57C00;
+  --success: #2E7D32;
+
+  /* Radius — matches Flutter borderRadius values */
+  --radius-sm: 8px;
+  --radius:    12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow:    0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+/* ==========================================================================
+   Reset & Base
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  background: var(--bg);
+  color: var(--text-primary);
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+a:hover { color: var(--primary-dark); }
+
+h1, h2, h3, h4, h5, h6 { margin: 0; }
+p { margin: 0; }
+
+/* ==========================================================================
+   Layout Shell
+   ========================================================================== */
+
+.web-app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
+.main-content {
+  flex: 1;
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+/* ==========================================================================
+   Navbar — mirrors mobile AppBar (white bg, #1E2E1E text, #1B5E20 icons)
+   ========================================================================== */
+
+.web-navbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  height: 60px;
+  gap: 1rem;
+}
+
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.brand-subtitle {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-link:hover {
+  background: var(--primary-bg);
+  color: var(--primary);
+}
+
+/* Active state matches Flutter NavigationBar selected indicator */
+.nav-link.active {
+  background: var(--primary-bg);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.nav-badge-pill {
+  font-size: 0.65rem;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.badge-primary {
+  background: var(--primary-bg);
+  color: var(--primary-dark);
+}
+
+/* ==========================================================================
+   Tech Header Gradient — matches AppTheme.techHeaderGradient
+   ========================================================================== */
+
+.tech-header {
+  background: linear-gradient(135deg, #0F2E14, #1B5E20, #004D40);
+  color: white;
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.tech-header-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.3px;
+}
+
+.tech-header-sub {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.75);
+  margin-top: 0.25rem;
+}
+
+.live-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(16,185,129,0.5);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: white;
+  margin-bottom: 0.75rem;
+}
+
+.live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ndvi);
+}
+
+/* ==========================================================================
+   Page Container & Headers
+   ========================================================================== */
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.page-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.page-title-icon { flex-shrink: 0; }
+
+.page-title {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+}
+
+.page-subtitle {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  margin-top: 0.2rem;
+}
+
+/* ==========================================================================
+   Section Cards — matches Flutter Card (elevation:0, radius:16, border grey.200)
+   ========================================================================== */
+
+.section-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.section-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.section-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+
+/* ==========================================================================
+   Buttons — matches Flutter ElevatedButton / OutlinedButton
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, opacity 0.15s;
+  font-family: inherit;
+  letter-spacing: 0.1px;
+}
+
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ElevatedButton style */
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+.btn-primary:hover:not(:disabled) { background: var(--primary-dark); border-color: var(--primary-dark); }
+
+/* OutlinedButton style */
+.btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.btn-secondary:hover:not(:disabled) { background: var(--primary-bg); }
+
+/* Ghost */
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+.btn-ghost:hover:not(:disabled) { background: var(--surface-alt); color: var(--text-primary); }
+
+/* Danger */
+.btn-danger {
+  background: var(--error);
+  color: #fff;
+  border-color: var(--error);
+}
+.btn-danger:hover:not(:disabled) { background: #b71c1c; }
+
+/* ==========================================================================
+   State Cards
+   ========================================================================== */
+
+.state-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.875rem;
+  padding: 3rem 2rem;
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--border);
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.loading-state { background: var(--surface); }
+.error-state { background: #fef2f2; border-color: #fca5a5; color: #991b1b; }
+.empty-state { background: var(--surface); color: var(--text-muted); }
+
+.spinner {
+  width: 30px; height: 30px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 0.7s linear infinite; }
+
+/* ==========================================================================
+   Risk / Severity Badges — matches RiskBadge widget exactly
+   ========================================================================== */
+
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.risk-badge.low      { background: var(--risk-low-bg);      color: var(--risk-low-text);      border: 1px solid rgba(21,128,61,0.3); }
+.risk-badge.moderate { background: var(--risk-moderate-bg);  color: var(--risk-moderate-text);  border: 1px solid rgba(180,83,9,0.3); }
+.risk-badge.high     { background: var(--risk-high-bg);      color: var(--risk-high-text);      border: 1px solid rgba(194,65,12,0.3); }
+.risk-badge.critical { background: var(--risk-critical-bg);  color: var(--risk-critical-text);  border: 1px solid rgba(153,27,27,0.3); }
+
+/* Compact variant */
+.risk-badge.compact { padding: 2px 8px; border-radius: 12px; border: none; font-size: 0.68rem; }
+
+/* ==========================================================================
+   Filters & Chips — matches Flutter ChipTheme
+   ========================================================================== */
+
+.filters-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+/* Matches Flutter ChipTheme: bg #E8F5E9, selected #2E7D32, radius 20 */
+.chip {
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+.chip:hover { background: var(--primary-bg); color: var(--primary); border-color: rgba(46,125,50,0.3); }
+.chip-active { background: var(--primary) !important; color: #fff !important; border-color: var(--primary) !important; }
+
+.result-count {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Form inputs — matches Flutter InputDecorationTheme (radius 12, grey.300 border)
+   ========================================================================== */
+
+.coord-form { display: flex; flex-direction: column; gap: 0.375rem; }
+.coord-inputs { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+
+.input-group { position: relative; }
+.input-icon {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); pointer-events: none;
+}
+
+.coord-input, .form-input, .form-select, .form-textarea {
+  height: 48px;
+  padding: 0 0.875rem;
+  border: 1px solid #d1d5db; /* grey.300 */
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.coord-input { padding-left: 2rem; width: 140px; height: 42px; }
+
+.form-textarea { height: auto; padding: 0.75rem 0.875rem; resize: vertical; }
+
+.coord-input:focus, .form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  border-width: 2px;
+  box-shadow: 0 0 0 3px rgba(46,125,50,0.1);
+}
+
+.form-field { display: flex; flex-direction: column; gap: 0.375rem; }
+.form-label { font-size: 0.82rem; font-weight: 600; color: var(--text-primary); }
+.form-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+.form-actions { display: flex; gap: 0.625rem; justify-content: flex-end; margin-top: 0.5rem; }
+.field-error { font-size: 0.78rem; color: var(--error); }
+
+/* ==========================================================================
+   Weather Widget — mirrors WeatherScreen card styles
+   ========================================================================== */
+
+/* Current weather hero card — blue gradient (same as Flutter WeatherScreen) */
+.weather-hero {
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #60a5fa, #2563eb);
+  color: white;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.weather-hero-temp {
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  color: white;
+}
+
+.weather-hero-label {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 0.5rem;
+}
+
+.weather-stats-row {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.weather-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.weather-stat-value {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: white;
+}
+
+.weather-stat-label {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.7);
+}
+
+/* 7-day forecast list — matches Flutter ListTile card per day */
+.forecast-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.forecast-day {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+}
+
+.forecast-day-icon {
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  background: #eff6ff;
+  border-radius: var(--radius);
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.forecast-day-label {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.forecast-day-rain {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.forecast-day-temp {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* Temperature trend chart */
+.chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
+.chart-scroll { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: thin; }
+.chart-bar-item { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 52px; flex-shrink: 0; }
+.chart-bar-label { font-size: 0.68rem; color: var(--text-muted); font-weight: 500; }
+.chart-bar { width: 12px; border-radius: 4px; background: linear-gradient(to top, #2563eb, #93c5fd); min-height: 8px; }
+.chart-bar-value { font-size: 0.72rem; font-weight: 600; color: var(--text-primary); }
+
+/* ==========================================================================
+   Alerts / Hazard Cards — mirrors AlertCard + AlertsListScreen
+   ========================================================================== */
+
+.alerts-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.alert-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+.alert-card:hover { box-shadow: var(--shadow); }
+
+.alert-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+}
+
+.alert-severity-icon {
+  width: 48px; height: 48px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.alert-card-meta { flex: 1; min-width: 0; }
+.alert-card-title { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); }
+.alert-card-hazard { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
+.alert-card-message { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; }
+
+.alert-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.alert-meta-text { font-size: 0.72rem; color: var(--text-muted); }
+
+/* Unread dot — matches Flutter's 10×10 green circle */
+.unread-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+/* Stats bar at top of alerts list */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 0.75rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.875rem;
+  text-align: center;
+}
+
+.stat-value { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); }
+.stat-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+
+/* ==========================================================================
+   Detail Modal / Bottom Sheet — matches DraggableScrollableSheet pattern
+   ========================================================================== */
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-sheet {
+  background: var(--surface);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slide-up 0.25s ease;
+}
+
+@keyframes slide-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+.modal-handle {
+  width: 40px; height: 4px;
+  background: #d1d5db;
+  border-radius: 2px;
+  margin: 1rem auto 1.25rem;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #0F2E14, #1B5E20, #004D40);
+  color: white;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modal-header-title { font-size: 1rem; font-weight: 700; flex: 1; }
+.modal-body { padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  gap: 1rem;
+}
+.detail-row:last-child { border-bottom: none; }
+.detail-label { font-size: 0.83rem; color: var(--text-secondary); }
+.detail-value { font-size: 0.83rem; font-weight: 600; color: var(--text-primary); text-align: right; }
+
+/* Info box — treatment (blue) / prevention (yellow) */
+.info-box-blue { background: #EFF6FF; border: 1px solid #BFDBFE; border-radius: var(--radius); padding: 0.875rem; }
+.info-box-yellow { background: #FEFCE8; border: 1px solid #FEF08A; border-radius: var(--radius); padding: 0.875rem; }
+.info-box-green { background: #F0FDF4; border: 1px solid #86EFAC; border-radius: var(--radius); padding: 0.875rem; }
+.info-box-text { font-size: 0.82rem; line-height: 1.5; }
+.info-box-text.blue { color: #1E3A8A; }
+.info-box-text.yellow { color: #713F12; }
+.info-box-text.green { color: #166534; }
+
+/* ==========================================================================
+   Create Alert Form
+   ========================================================================== */
+
+.form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-section-title { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); }
+
+.priority-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.priority-chip {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.9rem;
+  cursor: pointer; border: 1.5px solid var(--border);
+  background: var(--surface); color: var(--text-secondary);
+  transition: all 0.15s; font-family: inherit;
+}
+.priority-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+.priority-chip:hover:not(.active) { border-color: var(--primary); color: var(--primary); }
+
+/* ==========================================================================
+   Risk Assessments
+   ========================================================================== */
+
+.risk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.875rem; }
+
+.risk-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.125rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.risk-card-header { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.risk-card-title { font-size: 0.92rem; font-weight: 700; color: var(--text-primary); }
+.risk-card-meta { font-size: 0.75rem; color: var(--text-muted); }
+
+/* Progress bar */
+.progress-track { height: 8px; background: var(--border); border-radius: 999px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 999px; transition: width 0.4s ease; }
+
+/* ==========================================================================
+   Home Page — Feature Grid (mirrors HomeScreen 2-col grid)
+   ========================================================================== */
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.875rem;
+}
+
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 0.875rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.15s, border-color 0.15s;
+}
+.feature-card:hover { box-shadow: var(--shadow); border-color: rgba(46,125,50,0.3); }
+
+.feature-card-top { display: flex; align-items: flex-start; justify-content: space-between; }
+
+.feature-icon-wrap {
+  width: 44px; height: 44px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.feature-badge {
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.feature-card-title { font-size: 0.9rem; font-weight: 700; color: #1a1a1a; }
+.feature-card-sub { font-size: 0.75rem; color: var(--text-secondary); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+/* AI FAB card (special dark gradient) */
+.ai-feature-card {
+  background: linear-gradient(135deg, #1B5E20, #0F3E14);
+  border: 1.5px solid rgba(245,158,11,0.6);
+  border-radius: var(--radius-lg);
+  padding: 0.875rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(27,94,32,0.3);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.web-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.footer-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .navbar-inner { flex-wrap: wrap; height: auto; padding: 0.625rem 1rem; }
+  .nav-links { flex-wrap: wrap; gap: 0.15rem; }
+  .nav-link span:not(.nav-badge-pill) { display: none; }
+  .page-header { flex-direction: column; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .alerts-grid { grid-template-columns: 1fr; }
+  .risk-grid { grid-template-columns: 1fr; }
+  .weather-stats-row { justify-content: space-between; }
+  .modal-sheet { border-radius: 0; max-height: 95vh; }
 }
