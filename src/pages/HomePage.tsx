@@ -1,33 +1,47 @@
 /**
  * @file HomePage.tsx
- * @description EthioFarm web portal home — mirrors Flutter HomeScreen feature grid
- *   Same tech-header gradient, same module cards, same brand identity
+ * @description EthioFarm web portal home — mirrors Flutter HomeScreen
+ *   + Time-of-day greeting
+ *   + Live weather banner from /api/v1/weather/forecast
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Satellite,
-  ShieldAlert,
-  Activity,
-  CloudSun,
-  MapPin,
-  Microscope,
-  Cpu,
-  BarChart3,
-  Sprout,
-  Mic,
+  Satellite, ShieldAlert, Activity, CloudSun,
+  MapPin, Microscope, Cpu, BarChart3, Sprout, Mic,
+  Droplets, Wind, RefreshCw,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { getWeatherForecast } from '../features/weather-livestock/services/weather-livestock.service';
+import type { WeatherForecast } from '../features/weather-livestock/types/weather-livestock.types';
 
 // ---------------------------------------------------------------------------
-// Feature card data — mirrors Flutter HomeScreen GridView children
+// Helpers
+// ---------------------------------------------------------------------------
+
+function getGreeting(): string {
+  const h = new Date().getHours();
+  if (h >= 5 && h < 12) return 'Good morning';
+  if (h >= 12 && h < 17) return 'Good afternoon';
+  return 'Good evening';
+}
+
+const CONDITION_EMOJI: Record<string, string> = {
+  sunny: '☀️', partlyCloudy: '⛅', cloudy: '☁️',
+  rainy: '🌧️', drizzle: '🌦️', thunderstorm: '⛈️',
+  frost: '❄️', fog: '🌫️',
+};
+const condEmoji = (type?: string) => CONDITION_EMOJI[type ?? ''] ?? '🌤️';
+
+// ---------------------------------------------------------------------------
+// Feature cards
 // ---------------------------------------------------------------------------
 
 const FEATURE_CARDS = [
   {
     title: 'Agro-Weather & Satellite',
-    subtitle: 'NDVI, CHIRPS rainfall, NASA POWER telemetry',
+    subtitle: 'Live forecast, NDVI, rainfall & ET₀',
     badge: 'Live',
     badgeColor: '#10B981',
     icon: CloudSun,
@@ -113,22 +127,155 @@ const FEATURE_CARDS = [
 ];
 
 // ---------------------------------------------------------------------------
-// Quick telemetry ribbon item — mirrors Flutter _buildQuickTelemetryItem
+// Live Weather Banner — mirrors Flutter HomeCommandCenterHero weather card
 // ---------------------------------------------------------------------------
 
-const TelemetryItem: React.FC<{
-  label: string;
-  status: string;
-  statusColor: string;
-}> = ({ label, status, statusColor }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-    <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.75)' }}>{label}</span>
-    <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-      <span style={{ width: 6, height: 6, borderRadius: '50%', background: statusColor, display: 'inline-block' }} />
-      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: statusColor }}>{status}</span>
-    </span>
-  </div>
-);
+const LiveWeatherBanner: React.FC = () => {
+  const [weather, setWeather] = useState<WeatherForecast | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const load = () => {
+    setLoading(true);
+    getWeatherForecast()
+      .then(setWeather)
+      .catch(() => setWeather(null))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => { load(); }, []);
+
+  if (loading) {
+    return (
+      <div style={{
+        background: 'rgba(255,255,255,0.08)',
+        border: '1px solid rgba(52,211,153,0.4)',
+        borderRadius: 'var(--radius)',
+        padding: '0.75rem 1rem',
+        display: 'flex', alignItems: 'center', gap: 10,
+      }}>
+        <div className="spinner" style={{ width: 18, height: 18, borderTopColor: '#34D399' }} />
+        <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.65)' }}>
+          Fetching live weather…
+        </span>
+      </div>
+    );
+  }
+
+  if (!weather) {
+    return (
+      <div style={{
+        background: 'rgba(255,255,255,0.06)',
+        border: '1px solid rgba(255,255,255,0.15)',
+        borderRadius: 'var(--radius)',
+        padding: '0.75rem 1rem',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      }}>
+        <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>
+          Weather unavailable
+        </span>
+        <button onClick={load} style={{
+          background: 'none', border: 'none', cursor: 'pointer',
+          color: '#34D399', display: 'flex', alignItems: 'center', gap: 4,
+          fontSize: '0.75rem', fontWeight: 600,
+        }}>
+          <RefreshCw size={12} /> Retry
+        </button>
+      </div>
+    );
+  }
+
+  const c = weather.current;
+  const today = weather.daily[0];
+  const now = new Date();
+  const hourLabel = `${String(now.getHours()).padStart(2, '0')}:00`;
+
+  return (
+    <Link to="/weather" style={{ textDecoration: 'none' }}>
+      <div style={{
+        background: 'linear-gradient(135deg, rgba(20,83,45,0.92), rgba(15,62,80,0.92))',
+        border: '1.2px solid rgba(52,211,153,0.4)',
+        borderRadius: 'var(--radius)',
+        padding: '0.75rem 1rem',
+        display: 'flex', alignItems: 'center', gap: '0.75rem',
+        cursor: 'pointer',
+        transition: 'opacity 0.15s',
+      }}>
+        {/* Weather icon */}
+        <div style={{
+          width: 44, height: 44, borderRadius: 12, flexShrink: 0,
+          background: 'rgba(245,158,11,0.22)',
+          border: '1px solid rgba(251,191,36,0.5)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: '1.4rem',
+        }}>
+          {condEmoji(c.conditionType)}
+        </div>
+
+        {/* Temp + condition + H/L + stats */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
+            <span style={{ fontSize: '1.2rem', fontWeight: 800, color: 'white', letterSpacing: -0.5 }}>
+              {c.temperatureC.toFixed(1)}°C
+            </span>
+            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: 'white' }}>
+              {c.conditionEn}
+            </span>
+            {c.conditionAm && (
+              <span style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.7)' }}>
+                {c.conditionAm}
+              </span>
+            )}
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: 3 }}>
+            {today && (
+              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'rgba(255,255,255,0.8)' }}>
+                H: {today.maxTempC.toFixed(0)}° / L: {today.minTempC.toFixed(0)}°
+              </span>
+            )}
+            <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)' }}>·</span>
+            <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center', gap: 3 }}>
+              <Droplets size={10} /> {c.relativeHumidity}%
+            </span>
+            <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)' }}>·</span>
+            <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'rgba(255,255,255,0.8)', display: 'flex', alignItems: 'center', gap: 3 }}>
+              <Wind size={10} /> {c.windSpeedKmh.toFixed(0)} km/h
+            </span>
+            <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)' }}>·</span>
+            <span style={{ fontSize: '0.7rem', fontWeight: 600, color: 'rgba(255,255,255,0.8)' }}>
+              🌧️ {c.precipitationMm.toFixed(1)} mm
+            </span>
+          </div>
+          <div style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>
+            {weather.locationName}
+          </div>
+        </div>
+
+        {/* Hourly live badge */}
+        <div style={{
+          flexShrink: 0, padding: '4px 8px',
+          background: 'rgba(16,185,129,0.22)',
+          border: '1px solid rgba(52,211,153,0.5)',
+          borderRadius: 10,
+          textAlign: 'center',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <span style={{
+              width: 6, height: 6, borderRadius: '50%',
+              background: '#34D399', display: 'inline-block',
+              boxShadow: '0 0 5px #34D399',
+            }} />
+            <span style={{ fontSize: '0.62rem', fontWeight: 900, color: '#6EE7B7', letterSpacing: 0.4 }}>
+              HOURLY LIVE
+            </span>
+          </div>
+          <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'rgba(255,255,255,0.9)', marginTop: 2 }}>
+            {hourLabel}
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
 
 // ---------------------------------------------------------------------------
 // Page
@@ -137,22 +284,21 @@ const TelemetryItem: React.FC<{
 export const HomePage: React.FC = () => {
   const { user } = useAuth();
   const userName = user?.fullName ?? 'Agricultural Leader';
+  const greeting = getGreeting();
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
-      {/* ── Tech Hero Banner ─ mirrors Flutter techHeaderGradient ── */}
-      <div
-        style={{
-          background: 'linear-gradient(135deg, #0F2E14, #1B5E20, #004D40)',
-          borderRadius: 'var(--radius-lg)',
-          padding: '1.5rem',
-          color: 'white',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Faint satellite icon bg */}
+      {/* ── Tech Hero Banner ── */}
+      <div style={{
+        background: 'linear-gradient(135deg, #0F2E14, #1B5E20, #004D40)',
+        borderRadius: 'var(--radius-lg)',
+        padding: '1.5rem',
+        color: 'white',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        {/* Faint satellite bg */}
         <div style={{
           position: 'absolute', right: -20, top: -20,
           fontSize: 160, opacity: 0.05, lineHeight: 1,
@@ -161,38 +307,25 @@ export const HomePage: React.FC = () => {
           🛰️
         </div>
 
-        {/* Live satellite pill */}
+        {/* Live pill */}
         <div className="live-pill" style={{ marginBottom: '1rem' }}>
           <span className="live-dot" />
           SENTINEL-2 · LIVE TELEMETRY
         </div>
 
-        {/* Welcome text */}
-        <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', margin: 0 }}>Welcome,</p>
-        <h2 style={{ fontSize: '1.375rem', fontWeight: 700, margin: '0.25rem 0 1rem', letterSpacing: '-0.3px' }}>
+        {/* Time-of-day greeting — matches Flutter HomeCommandCenterHero */}
+        <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.72)', margin: 0, fontWeight: 500 }}>
+          {greeting},
+        </p>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: '0.2rem 0 1rem', letterSpacing: '-0.4px' }}>
           {userName}
         </h2>
 
-        {/* Telemetry ribbon */}
-        <div style={{
-          background: 'rgba(255,255,255,0.08)',
-          border: '1px solid rgba(255,255,255,0.15)',
-          borderRadius: 'var(--radius)',
-          padding: '0.75rem 1rem',
-          display: 'flex',
-          justifyContent: 'space-around',
-          flexWrap: 'wrap',
-          gap: '0.5rem',
-        }}>
-          <TelemetryItem label="Early Warning" status="Active" statusColor="#10B981" />
-          <div style={{ width: 1, background: 'rgba(255,255,255,0.2)', alignSelf: 'stretch' }} />
-          <TelemetryItem label="IoT Sensors" status="Online" statusColor="#38BDF8" />
-          <div style={{ width: 1, background: 'rgba(255,255,255,0.2)', alignSelf: 'stretch' }} />
-          <TelemetryItem label="Crop Health" status="Optimal" statusColor="#10B981" />
-        </div>
+        {/* Live weather banner — mirrors Flutter daily temperature banner */}
+        <LiveWeatherBanner />
       </div>
 
-      {/* ── AI Assistant card — mirrors Flutter center FAB card ── */}
+      {/* ── AI Assistant card ── */}
       <div className="ai-feature-card" style={{ flexDirection: 'row', alignItems: 'center', gap: '1rem' }}>
         <div style={{
           width: 48, height: 48, borderRadius: '50%',
@@ -215,14 +348,11 @@ export const HomePage: React.FC = () => {
         }}>Voice AI</span>
       </div>
 
-      {/* ── Agro-Intelligence Modules grid — mirrors Flutter GridView ── */}
+      {/* ── Agro-Intelligence Modules grid ── */}
       <div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.875rem' }}>
-          <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
-            Agro-Intelligence Modules
-          </h3>
-        </div>
-
+        <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.875rem' }}>
+          Agro-Intelligence Modules
+        </h3>
         <div className="features-grid">
           {FEATURE_CARDS.map((card) => {
             const Icon = card.icon;
@@ -232,10 +362,7 @@ export const HomePage: React.FC = () => {
                   <div className="feature-icon-wrap" style={{ background: card.iconBg }}>
                     <Icon size={22} color={card.iconColor} />
                   </div>
-                  <span
-                    className="feature-badge"
-                    style={{ background: `${card.badgeColor}18`, color: card.badgeColor }}
-                  >
+                  <span className="feature-badge" style={{ background: `${card.badgeColor}18`, color: card.badgeColor }}>
                     {card.badge}
                   </span>
                 </div>
@@ -243,10 +370,7 @@ export const HomePage: React.FC = () => {
                   <div className="feature-card-title">{card.title}</div>
                   <div className="feature-card-sub">{card.subtitle}</div>
                   {card.comingSoon && (
-                    <div style={{
-                      fontSize: '0.65rem', color: 'var(--text-muted)',
-                      marginTop: 4, fontStyle: 'italic',
-                    }}>
+                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', marginTop: 4, fontStyle: 'italic' }}>
                       Coming soon
                     </div>
                   )}
@@ -267,16 +391,11 @@ export const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* ── System status footer strip ── */}
+      {/* ── System status strip ── */}
       <div style={{
-        background: 'var(--surface)',
-        border: '1px solid var(--border)',
-        borderRadius: 'var(--radius)',
-        padding: '0.875rem 1.25rem',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '0.75rem',
-        flexWrap: 'wrap',
+        background: 'var(--surface)', border: '1px solid var(--border)',
+        borderRadius: 'var(--radius)', padding: '0.875rem 1.25rem',
+        display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap',
       }}>
         <Sprout size={16} color="var(--primary)" />
         <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', flex: 1 }}>

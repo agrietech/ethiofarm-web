@@ -1,46 +1,42 @@
 /**
  * @file useLiveWeather.ts
  * @owner Banchamlak
- * @description Manages satellite observation state for a woreda or all woredas
+ * @description Manages live weather forecast state — /api/v1/weather/forecast
  */
 
 import { useState, useCallback } from 'react';
-import {
-  getSatelliteObservations,
-  getWoredaSatelliteData,
-} from '../services/weather-livestock.service';
-import type { SatelliteObservation } from '../types/weather-livestock.types';
+import { getWeatherForecast } from '../services/weather-livestock.service';
+import type { WeatherForecast } from '../types/weather-livestock.types';
 
 interface UseLiveWeatherReturn {
-  observations: SatelliteObservation[];
+  weather: WeatherForecast | null;
   loading: boolean;
   error: string | null;
-  fetchWeather: (woredaId?: string) => Promise<void>;
+  fetchWeather: (params?: { woredaId?: string; lat?: number; lng?: number }) => Promise<void>;
 }
 
 export const useLiveWeather = (): UseLiveWeatherReturn => {
-  const [observations, setObservations] = useState<SatelliteObservation[]>([]);
+  const [weather, setWeather] = useState<WeatherForecast | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchWeather = useCallback(async (woredaId?: string): Promise<void> => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = woredaId
-        ? await getWoredaSatelliteData(woredaId)
-        : await getSatelliteObservations();
-      setObservations(data);
-    } catch (err: unknown) {
-      const message =
-        err instanceof Error
-          ? err.message
-          : 'Failed to load satellite data. Please try again.';
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const fetchWeather = useCallback(
+    async (params?: { woredaId?: string; lat?: number; lng?: number }): Promise<void> => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await getWeatherForecast(params);
+        setWeather(data);
+      } catch (err: unknown) {
+        setError(
+          err instanceof Error ? err.message : 'Failed to load weather data.'
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
-  return { observations, loading, error, fetchWeather };
+  return { weather, loading, error, fetchWeather };
 };
