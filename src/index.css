@@ -931,3 +931,18 @@ p { margin: 0; }
   .weather-stats-row { justify-content: space-between; }
   .modal-sheet { border-radius: 0; max-height: 95vh; }
 }
+
+/* ==========================================================================
+   Additional — status badges, syringe icon alias
+   ========================================================================== */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}

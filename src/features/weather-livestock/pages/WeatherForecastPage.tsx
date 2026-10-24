@@ -1,116 +1,129 @@
 /**
  * @file WeatherForecastPage.tsx
  * @owner Banchamlak
- * @description Satellite observation dashboard — mirrors Flutter WeatherScreen
- *   Data: /api/v1/satellite-observations (CHIRPS rainfall, NASA POWER temp, NDVI, GloFAS)
+ * @description Hyper-local agro-weather dashboard — mirrors Flutter WeatherScreen
+ *   Data: GET /api/v1/weather/forecast (Open-Meteo live, location-aware)
  */
 
 import React, { useEffect, useState } from 'react';
-import { Satellite, RefreshCw, AlertCircle, Search } from 'lucide-react';
+import { CloudSun, RefreshCw, AlertCircle, MapPin } from 'lucide-react';
 import { useLiveWeather } from '../hooks/useLiveWeather';
 import { WeatherWidget } from '../components/WeatherWidget';
 
-// ---------------------------------------------------------------------------
-// NDVI bar chart helper
-// ---------------------------------------------------------------------------
-
-const NdviBar: React.FC<{ value: number }> = ({ value }) => {
-  // NDVI ranges from -1 to +1; display 0–1 range
-  const pct = Math.max(0, Math.min(1, value)) * 100;
-  const color = value >= 0.6 ? '#10B981' : value >= 0.4 ? '#4CAF50' : value >= 0.2 ? '#F59E0B' : '#DC2626';
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-      <div className="progress-track" style={{ flex: 1 }}>
-        <div className="progress-fill" style={{ width: `${pct}%`, background: color }} />
-      </div>
-      <span style={{ fontSize: '0.78rem', fontWeight: 700, color, minWidth: 36 }}>{value.toFixed(2)}</span>
-    </div>
-  );
-};
-
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
-
 export const WeatherForecastPage: React.FC = () => {
-  const { observations, loading, error, fetchWeather } = useLiveWeather();
-  const [woredaInput, setWoredaInput] = useState('');
-  const [woredaSearch, setWoredaSearch] = useState('');
+  const { weather, loading, error, fetchWeather } = useLiveWeather();
 
+  const [lat, setLat] = useState('');
+  const [lng, setLng] = useState('');
+  const [woredaId, setWoredaId] = useState('');
+  const [inputError, setInputError] = useState<string | null>(null);
+
+  // On mount — use browser geolocation if available, else let backend use user's woreda
   useEffect(() => {
-    fetchWeather();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => fetchWeather({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+        () => fetchWeather(),
+        { timeout: 8000 }
+      );
+    } else {
+      fetchWeather();
+    }
   }, [fetchWeather]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const v = woredaInput.trim();
-    setWoredaSearch(v);
-    fetchWeather(v || undefined);
-  };
+    setInputError(null);
 
-  // Most recent observation to show in the hero widget
-  const latest = observations[0] ?? null;
+    if (woredaId.trim()) {
+      fetchWeather({ woredaId: woredaId.trim() });
+      return;
+    }
+
+    const parsedLat = parseFloat(lat);
+    const parsedLng = parseFloat(lng);
+    if (!isNaN(parsedLat) && !isNaN(parsedLng)) {
+      if (parsedLat < -90 || parsedLat > 90 || parsedLng < -180 || parsedLng > 180) {
+        setInputError('Coordinates are out of valid range.');
+        return;
+      }
+      fetchWeather({ lat: parsedLat, lng: parsedLng });
+      return;
+    }
+
+    setInputError('Enter a Woreda ID or valid coordinates.');
+  };
 
   return (
     <div className="page-container">
-      {/* Tech header — mirrors Flutter HomeScreen banner */}
+      {/* Tech header */}
       <div className="tech-header">
         <div className="live-pill">
-          <span className="live-dot" />
-          SENTINEL-2 · NASA POWER · CHIRPS · GloFAS — LIVE TELEMETRY
+          <span className="live-dot" style={{ background: '#38BDF8' }} />
+          OPEN-METEO · NASA POWER · HYPER-LOCAL AGRO-METEOROLOGY
         </div>
-        <h1 className="tech-header-title">Agro-Weather & Satellite Intelligence</h1>
+        <h1 className="tech-header-title">Agro-Weather Forecast</h1>
         <p className="tech-header-sub">
-          Planetary remote sensing — NDVI, soil moisture, rainfall &amp; temperature
+          Live temperature, rainfall, humidity, wind &amp; ET₀ evapotranspiration
         </p>
       </div>
 
-      {/* Woreda search */}
-      <div className="page-header" style={{ marginTop: '-0.5rem' }}>
-        <form className="coord-form" onSubmit={handleSearch}>
-          <div className="coord-inputs">
-            <div className="input-group">
-              <Search size={14} className="input-icon" />
-              <input
-                type="text"
-                className="coord-input"
-                placeholder="Woreda ID…"
-                value={woredaInput}
-                onChange={(e) => setWoredaInput(e.target.value)}
-                aria-label="Filter by Woreda ID"
-                style={{ width: 180 }}
-              />
-            </div>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
-              <Search size={14} /> Search
-            </button>
-            {woredaSearch && (
-              <button
-                type="button"
-                className="btn btn-secondary"
-                onClick={() => { setWoredaInput(''); setWoredaSearch(''); fetchWeather(); }}
-              >
-                All Woredas
-              </button>
-            )}
-            <button
-              type="button"
-              className="btn btn-ghost"
-              onClick={() => fetchWeather(woredaSearch || undefined)}
-              disabled={loading}
-              aria-label="Refresh"
-            >
-              <RefreshCw size={14} className={loading ? 'spin' : ''} /> Refresh
-            </button>
+      {/* Location search */}
+      <form className="coord-form" onSubmit={handleSearch}>
+        <div className="coord-inputs">
+          <div className="input-group">
+            <MapPin size={14} className="input-icon" />
+            <input
+              type="text"
+              className="coord-input"
+              placeholder="Woreda ID…"
+              value={woredaId}
+              onChange={(e) => setWoredaId(e.target.value)}
+              aria-label="Woreda ID"
+              style={{ width: 150 }}
+            />
           </div>
-        </form>
-      </div>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>or GPS:</span>
+          <input
+            type="number"
+            step="any"
+            className="coord-input"
+            placeholder="Latitude"
+            value={lat}
+            onChange={(e) => setLat(e.target.value)}
+            aria-label="Latitude"
+          />
+          <input
+            type="number"
+            step="any"
+            className="coord-input"
+            placeholder="Longitude"
+            value={lng}
+            onChange={(e) => setLng(e.target.value)}
+            aria-label="Longitude"
+          />
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            <CloudSun size={14} /> Search
+          </button>
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={() => fetchWeather()}
+            disabled={loading}
+            aria-label="Use my location"
+          >
+            <RefreshCw size={14} className={loading ? 'spin' : ''} />
+            My Location
+          </button>
+        </div>
+        {inputError && <p className="field-error">{inputError}</p>}
+      </form>
 
       {/* Loading */}
       {loading && (
         <div className="state-card loading-state" aria-live="polite" aria-busy="true">
           <div className="spinner" aria-hidden="true" />
-          <p>Loading satellite telemetry…</p>
+          <p>Fetching live weather data…</p>
         </div>
       )}
 
@@ -125,69 +138,16 @@ export const WeatherForecastPage: React.FC = () => {
         </div>
       )}
 
-      {/* Hero widget — latest observation */}
-      {!loading && !error && latest && (
-        <WeatherWidget observation={latest} />
-      )}
-
-      {/* All observations table / cards */}
-      {!loading && !error && observations.length > 1 && (
-        <div className="section-card">
-          <h3 className="section-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Satellite size={18} style={{ color: 'var(--primary)' }} />
-            All Observations ({observations.length})
-          </h3>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.83rem' }}>
-              <thead>
-                <tr style={{ borderBottom: '2px solid var(--border)', color: 'var(--text-muted)', textAlign: 'left' }}>
-                  <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>Woreda</th>
-                  <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>Date</th>
-                  <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>Temp (°C)</th>
-                  <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>Rain (mm)</th>
-                  <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>NDVI</th>
-                  <th style={{ padding: '0.5rem 0.75rem', fontWeight: 600 }}>Soil Moisture</th>
-                </tr>
-              </thead>
-              <tbody>
-                {observations.map((obs) => (
-                  <tr key={obs.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                    <td style={{ padding: '0.625rem 0.75rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                      {obs.woredaName ?? obs.woredaId}
-                    </td>
-                    <td style={{ padding: '0.625rem 0.75rem', color: 'var(--text-secondary)' }}>
-                      {(() => { try { return new Date(obs.observedAt).toLocaleDateString(); } catch { return obs.observedAt; } })()}
-                    </td>
-                    <td style={{ padding: '0.625rem 0.75rem' }}>
-                      {obs.nasaPowerTempC != null ? `${obs.nasaPowerTempC.toFixed(1)}°` : '—'}
-                    </td>
-                    <td style={{ padding: '0.625rem 0.75rem' }}>
-                      {obs.chirpsRainfallMm != null ? `${obs.chirpsRainfallMm.toFixed(1)}` : '—'}
-                    </td>
-                    <td style={{ padding: '0.625rem 0.75rem', minWidth: 120 }}>
-                      {obs.ndvi != null ? <NdviBar value={obs.ndvi} /> : '—'}
-                    </td>
-                    <td style={{ padding: '0.625rem 0.75rem' }}>
-                      {obs.soilMoisturePct != null ? `${obs.soilMoisturePct.toFixed(1)}%` : '—'}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+      {/* Weather widget */}
+      {!loading && !error && weather && (
+        <WeatherWidget forecast={weather} />
       )}
 
       {/* Empty state */}
-      {!loading && !error && observations.length === 0 && (
+      {!loading && !error && !weather && (
         <div className="state-card empty-state">
-          <Satellite size={48} />
-          <p>No satellite observations found.{woredaSearch ? ` Try a different Woreda ID.` : ''}</p>
-          {woredaSearch && (
-            <button className="btn btn-secondary" onClick={() => { setWoredaInput(''); setWoredaSearch(''); fetchWeather(); }}>
-              Show All
-            </button>
-          )}
+          <CloudSun size={48} />
+          <p>No weather data yet. Allow location access or search by Woreda ID.</p>
         </div>
       )}
     </div>
