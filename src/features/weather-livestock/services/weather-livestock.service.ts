@@ -1,8 +1,3 @@
-/**
- * @file weather-livestock.service.ts
- * @owner Banchamlak
- * @description API calls wired to real AgriEtech backend endpoints
- */
 
 import { apiClient } from '../../../services/apiClient';
 import type { ApiResponse } from '../../../types/common.types';

@@ -1,9 +1,3 @@
-/**
- * @file WeatherWidget.tsx
- * @owner Banchamlak
- * @description Current conditions card + 24hr hourly scroll + 7-day strip
- *   Data: /api/v1/weather/forecast (Open-Meteo live telemetry)
- */
 
 import React from 'react';
 import { Thermometer, Droplets, Wind, Leaf, Sun } from 'lucide-react';

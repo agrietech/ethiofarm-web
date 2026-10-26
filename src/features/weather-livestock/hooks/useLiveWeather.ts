@@ -1,8 +1,3 @@
-/**
- * @file useLiveWeather.ts
- * @owner Banchamlak
- * @description Manages live weather forecast state — /api/v1/weather/forecast
- */
 
 import { useState, useCallback } from 'react';
 import { getWeatherForecast } from '../services/weather-livestock.service';

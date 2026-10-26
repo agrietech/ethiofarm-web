@@ -1,8 +1,3 @@
-/**
- * @file HazardAlertCard.tsx
- * @owner Banchamlak
- * @description Severity-colored alert card — mirrors Flutter AlertCard + RiskBadge widget
- */
 
 import React from 'react';
 import { AlertTriangle, Flame, Waves, Snowflake, Bug, Sun, Leaf } from 'lucide-react';

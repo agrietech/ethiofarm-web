@@ -1,9 +1,3 @@
-/**
- * @file WeatherForecastPage.tsx
- * @owner Banchamlak
- * @description Hyper-local agro-weather dashboard — mirrors Flutter WeatherScreen
- *   Data: GET /api/v1/weather/forecast (Open-Meteo live, location-aware)
- */
 
 import React, { useEffect, useState } from 'react';
 import { CloudSun, RefreshCw, AlertCircle, MapPin } from 'lucide-react';

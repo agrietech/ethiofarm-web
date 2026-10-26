@@ -1,12 +1,3 @@
-/**
- * @file weather-livestock.types.ts
- * @owner Banchamlak
- * @description Data contracts matching the real AgriEtech backend schema
- *   Weather:       GET /api/v1/weather/forecast
- *   Alerts:        GET /api/v1/alerts
- *   Risk:          GET /api/v1/risk-assessments
- *   Animal Health: GET /api/v1/animal-health/*
- */
 
 // ---------------------------------------------------------------------------
 // Weather

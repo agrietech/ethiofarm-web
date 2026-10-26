@@ -1,10 +1,3 @@
-/**
- * @file HazardsEarlyWarningPage.tsx
- * @owner Banchamlak
- * @description Multi-hazard early warning board — mirrors Flutter AlertsListScreen
- *   Data: GET /api/v1/alerts  +  GET /api/v1/alerts/active
- *   Create: POST /api/v1/alerts  (role-gated)
- */
 
 import React, { useEffect, useState, useCallback } from 'react';
 import {

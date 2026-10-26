@@ -1,10 +1,3 @@
-/**
- * @file LivestockRegistryPage.tsx
- * @owner Banchamlak
- * @description Livestock & Animal Health — mirrors Flutter AnimalHealthScreen
- *   Tabs: Outbreaks · Vaccination Campaigns · Pasture (NDVI)
- *   Data: /api/v1/animal-health/*
- */
 
 import React, { useEffect, useState, useCallback } from 'react';
 import {
