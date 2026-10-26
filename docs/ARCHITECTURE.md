@@ -10,7 +10,7 @@ This document details the architectural principles, component layout, responsive
 
 > [!NOTE]
 > The mobile smartphone application is built as a separate client in Flutter (`agriEtech-frontend`). 
-> `ethiofarm-web` is the **enterprise responsive web portal** serving desktop workstations, laptops, tablets, and large displays.
+> `ethiofarm-web` is the **enterprise responsive web portal** engineered for desktop workstations, laptops, tablets, and large displays.
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -44,12 +44,11 @@ The application uses standard responsive web layout containers rather than mobil
 
 * **Container Constraints**: Wrapped in `.web-app-container` (fluid 100% width, min-height: 100vh) with a centered `.main-content` container (`max-width: 1320px`).
 * **Navigation Architecture**:
-  * **Top Bar (`WebNavbar.tsx`)**: Displays branding, primary module links with engineer attribution chips (**Alen**, **Zinegnaw**, **Banchamlak**), and status.
+  * **Top Bar (`WebNavbar.tsx`)**: Displays branding, primary navigation routes (`Overview`, `Farm Ops`, `Crop AI`, `Weather`, `Alerts`, `Risk`), and system status badge.
   * **Responsive Grid System**: `.grid-responsive`, `.grid-cols-2`, `.grid-cols-3` adapting cleanly from 1920px 4K monitors down to 768px tablets.
-  * **Web Footer (`WebFooter.tsx`)**: Standard web footer displaying platform version, multi-device support note, and team attribution.
-* **Component Canvas Model**:
-  * All module files are prepared as clean, type-safe architectural stubs with zero mock UI bloat.
-  * Engineers open their designated files and write their own JSX, hooks, state, and API requests directly.
+  * **Web Footer (`WebFooter.tsx`)**: Standard web footer displaying platform branding and application version.
+* **Component Architecture**:
+  * All module files are fully implemented with clean, type-safe React 19 and TypeScript components connected to live backend APIs and custom hooks.
 
 ---
 
@@ -68,7 +67,16 @@ The application uses standard responsive web layout containers rather than mobil
 
 Each engineer operates with zero file collisions:
 
-1. **Shared IAM (Identity & Access)**: `src/features/auth/` — User account registration, login authentication, and password recovery.
-2. **Alen**: `src/features/farm-operations/` — Farm plot registry, GIS boundaries, and IoT probe moisture.
-3. **Zinegnaw**: `src/features/crop-pathology/` — Leaf pathology photo scanner, Gemini AI vision, organic treatment protocols, and DA escalation.
-4. **Banchamlak**: `src/features/weather-livestock/` — Hyper-local weather telemetry, 24h curves, 7-day outlook, multi-hazard early warnings, and livestock herd tracking.
+1. **System Architect & Lead**: **Abraham Amogne** (`CTC-329-26`) — Enterprise TypeScript architecture, `src/features/auth/` (IAM registration, login authentication, password recovery), core layouts (`WebNavbar`, `WebFooter`), and Axios integration.
+2. **Alen Biruk** (`CTC-2176-26`): `src/features/farm-operations/` — Farm plot registry, GIS boundaries, and IoT soil probe moisture monitor.
+3. **Zinegnaw** (`CTC-514-26`): `src/features/crop-pathology/` — Interactive camera viewfinder, multimodal AI crop pathology diagnostics, treatment advice, and case history.
+4. **Banchamlak Golla** (`CTC-2952-26`): `src/features/weather-livestock/` — Hyper-local weather telemetry, 24h curves, 7-day outlook, multi-hazard early warnings, and livestock herd tracking.
+
+---
+
+## 5. 📐 TypeScript Standards & Engineering Conventions
+
+* **Strict Typing**: Zero `any` types; all API responses and component props use explicit TypeScript interfaces.
+* **State Encapsulation**: Data fetching and mutation workflows are encapsulated within custom hooks (`useFarms`, `useCropDiagnosis`, `useLiveWeather`, `useSensorTelemetry`).
+* **Design Tokens**: Standardized CSS tokens in `src/index.css` for typography, spacing, surface borders, and agricultural brand colors.
+* **Production Build Integrity**: Verified via `tsc -b` and `vite build` with zero compiler warnings or bundle errors.
