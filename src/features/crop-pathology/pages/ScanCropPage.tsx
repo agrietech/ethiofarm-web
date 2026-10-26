@@ -1,8 +1,3 @@
-/**
- * @file ScanCropPage.tsx
- * @owner Zinegnaw
- * @feature Crop AI & Plant Pathology
- */
 
 import { useEffect, useState } from 'react';
 import type { CSSProperties, FormEvent } from 'react';

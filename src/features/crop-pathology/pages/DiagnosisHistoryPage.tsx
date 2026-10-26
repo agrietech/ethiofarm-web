@@ -1,8 +1,3 @@
-/**
- * @file DiagnosisHistoryPage.tsx
- * @owner Zinegnaw
- * @feature Crop AI & Plant Pathology
- */
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';

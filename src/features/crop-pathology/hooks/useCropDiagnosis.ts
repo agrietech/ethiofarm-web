@@ -1,8 +1,3 @@
-/**
- * @file useCropDiagnosis.ts
- * @owner Zinegnaw
- * @feature Crop AI & Plant Pathology
- */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import axios from 'axios';

@@ -1,8 +1,3 @@
-/**
- * @file crop-pathology.service.ts
- * @owner Zinegnaw
- * @feature Crop AI & Plant Pathology
- */
 
 import { apiClient } from '@/services/apiClient';
 import type { ApiResponse } from '@/types/common.types';

@@ -1,8 +1,3 @@
-/**
- * @file DiagnosisDetailPage.tsx
- * @owner Zinegnaw
- * @feature Crop AI & Plant Pathology
- */
 
 import { useCallback, useEffect, useState } from 'react';
 import type { CSSProperties, FormEvent, ReactNode } from 'react';

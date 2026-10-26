@@ -1,8 +1,3 @@
-/**
- * @file DiagnosisResultCard.tsx
- * @owner Zinegnaw
- * @feature Crop AI & Plant Pathology
- */
 
 import type { CSSProperties } from 'react';
 import { ChevronRight, Leaf, ShieldAlert } from 'lucide-react';

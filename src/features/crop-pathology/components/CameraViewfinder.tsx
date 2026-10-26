@@ -1,8 +1,3 @@
-/**
- * @file CameraViewfinder.tsx
- * @owner Zinegnaw
- * @feature Crop AI & Plant Pathology
- */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties, ChangeEvent, DragEvent } from 'react';
