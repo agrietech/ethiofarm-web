@@ -5,8 +5,8 @@
 > [!NOTE]
 > **Client Platform Separation**:
 > - The native mobile smartphone application is built separately in Flutter (`agriEtech-frontend`).
-> - `ethiofarm-web` is the dedicated **Enterprise Responsive Web Portal** for desktops, laptops, tablets, and large workstation displays.
-> - Feature directories in `src/features/` have been initialized as **clean architectural scaffolding with zero mock code**, enabling each engineer to write production web features with zero merge conflicts.
+> - `ethiofarm-web` is the dedicated **Enterprise Responsive Web Portal** engineered for desktops, laptops, tablets, and workstation displays.
+> - Built with TypeScript, React 19, and Vite, featuring Domain-Driven Modular Architecture (DDMA) with role-based routing and automated Bearer JWT API integration.
 
 ---
 
@@ -32,28 +32,25 @@ The development server runs at `http://localhost:5173/`.
 
 ## 👥 Engineering Team Work Breakdown & Ownership
 
-The system is partitioned into 3 isolated feature domains using Domain-Driven Modular Architecture (DDMA):
+The system is partitioned across feature domains using Domain-Driven Modular Architecture (DDMA). **Abraham Amogne** serves as the **Team Leader & Full-Stack System Architect**.
 
-| Engineer | Feature Domain | Assigned Directory | Dedicated Specification | Git Working Branch |
+| Engineer | Student ID | Formal Engineering Role | Assigned Feature Domain & Deliverables in Web Portal | Core Directories & Modules |
 | :--- | :--- | :--- | :--- | :--- |
-| **Alen** | Farm Operations, GIS & IoT Ground Sensors | `src/features/farm-operations/` | [ALEN_TASK_SPECIFICATION.md](docs/ALEN_TASK_SPECIFICATION.md) | `feature/alen-farm-operations-and-sensors` |
-| **Zinegnaw** | Crop AI, Plant Pathology & Camera Vision | `src/features/crop-pathology/` | [ZINEGNAW_TASK_SPECIFICATION.md](docs/ZINEGNAW_TASK_SPECIFICATION.md) | `feature/zinegnaw-crop-pathology-and-ai-vision` |
-| **Banchamlak** | Planetary GIS, Weather, Hazards & Livestock | `src/features/weather-livestock/` | [BANCHAMLAK_TASK_SPECIFICATION.md](docs/BANCHAMLAK_TASK_SPECIFICATION.md) | `feature/banchamlak-weather-and-livestock` |
+| **Abraham Amogne** | `CTC-329-26` | **Team Leader · System Architect** | **Enterprise Architecture, Core Shell & IAM Security**: Scaffolding, React 19 + TypeScript architecture, responsive layouts (`WebNavbar`, `WebFooter`, `WebLayout`), Bearer JWT interceptors (`apiClient.ts`), authentication & session state (`AuthContext`), and user IAM pages (`src/features/auth/`). | `src/core/`<br>`src/components/layout/`<br>`src/context/AuthContext.tsx`<br>`src/services/apiClient.ts`<br>`src/features/auth/` |
+| **Alen Biruk** | `CTC-2176-26` | **Web Platform Engineer** | **Farm Operations & IoT Soil Sensor Fleet**: Farm registry list (`FarmListPage`), new plot registration form (`RegisterFarmPage`), IoT soil probe monitor (`SensorMonitorPage`), volumetric water content gauges (`SensorGauge`), and `useFarms` / `useSensorTelemetry` custom hooks. | `src/features/farm-operations/pages/*`<br>`src/features/farm-operations/components/*`<br>`src/features/farm-operations/services/*`<br>`src/features/farm-operations/types/*` |
+| **Zinegnaw** | `CTC-514-26` | **Web Platform Engineer** | **Crop AI Vision, Plant Pathology & Treatments**: Interactive camera viewfinder with live webcam video capture (`CameraViewfinder`), crop scan workflow (`ScanCropPage`), disease outcome cards (`DiagnosisResultCard`), diagnostic history explorer (`DiagnosisHistoryPage`), deep-dive case report (`DiagnosisDetailPage`), and `useCropDiagnosis` custom hook. | `src/features/crop-pathology/pages/*`<br>`src/features/crop-pathology/components/*`<br>`src/features/crop-pathology/services/*`<br>`src/features/crop-pathology/hooks/*` |
+| **Banchamlak Golla** | `CTC-2952-26` | **Web Platform Engineer** | **Planetary Weather Forecasts, Hazards & Livestock Care**: Hyper-local weather telemetry page (`WeatherForecastPage`), 24-hour temperature curves & 7-day agricultural outlook, multi-hazard early warning center (`HazardsEarlyWarningPage`, `HazardAlertCard`), and livestock herd registry (`LivestockRegistryPage`). | `src/features/weather-livestock/pages/*`<br>`src/features/weather-livestock/components/*`<br>`src/features/weather-livestock/services/*`<br>`src/features/weather-livestock/hooks/*` |
 
 ---
 
-## 📚 Complete Documentation Suite
+## 📚 Compulsory Developer Documentation
 
-All project architecture, specifications, API contracts, and team conventions are documented in detail:
+For technical implementation blueprints and API contracts, refer to the [**Web Documentation Catalog**](docs/README.md):
 
-1. **[TEAM_ASSIGNMENTS.md](TEAM_ASSIGNMENTS.md)**: Master task allocation, domain responsibilities, and zero-conflict Git rules.
-2. **[docs/ALEN_TASK_SPECIFICATION.md](docs/ALEN_TASK_SPECIFICATION.md)**: Alen's complete file manifest, data models (`Farm`, `SoilSensor`), endpoints, and acceptance criteria.
-3. **[docs/ZINEGNAW_TASK_SPECIFICATION.md](docs/ZINEGNAW_TASK_SPECIFICATION.md)**: Zinegnaw's file manifest, Gemini AI disease contracts, leaf upload specs, and acceptance criteria.
-4. **[docs/BANCHAMLAK_TASK_SPECIFICATION.md](docs/BANCHAMLAK_TASK_SPECIFICATION.md)**: Banchamlak's file manifest, weather/hazard models, livestock herd contracts, and acceptance criteria.
-5. **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)**: Multi-device DDMA architecture, responsive layouts, networking layer, and token standards.
-6. **[docs/API_INTEGRATION_GUIDE.md](docs/API_INTEGRATION_GUIDE.md)**: Backend REST endpoint inventory, response envelopes, JWT authentication, and network resilience.
-7. **[docs/CODING_STANDARDS_AND_GITFLOW.md](docs/CODING_STANDARDS_AND_GITFLOW.md)**: TypeScript typing conventions, CSS token guidelines, GitFlow branching, and PR checklists.
-8. **[docs/TEAM_SPECIFICATIONS.md](docs/TEAM_SPECIFICATIONS.md)**: 3-engineer consolidated functional specifications and data schemas.
+1. [**`docs/README.md`**](docs/README.md) — Master documentation catalog index.
+2. [**`docs/ARCHITECTURE.md`**](docs/ARCHITECTURE.md) — Multi-device DDMA architecture, responsive layouts, networking layer, and TypeScript coding standards.
+3. [**`docs/MODULE_SPECIFICATIONS.md`**](docs/MODULE_SPECIFICATIONS.md) — Exhaustive developer specifications, data contracts, and component mapping across all modules.
+4. [**`docs/API_INTEGRATION_GUIDE.md`**](docs/API_INTEGRATION_GUIDE.md) — Backend REST endpoint inventory, response envelopes, JWT authentication, and network resilience.
 
 ---
 
@@ -61,14 +58,11 @@ All project architecture, specifications, API contracts, and team conventions ar
 
 ```text
 ethiofarm-web/
-├── docs/                                  <-- Comprehensive Documentation Suite
-│   ├── ALEN_TASK_SPECIFICATION.md         <-- Alen's detailed guide
-│   ├── ZINEGNAW_TASK_SPECIFICATION.md     <-- Zinegnaw's detailed guide
-│   ├── BANCHAMLAK_TASK_SPECIFICATION.md   <-- Banchamlak's detailed guide
-│   ├── ARCHITECTURE.md                    <-- Enterprise web architecture
-│   ├── TEAM_SPECIFICATIONS.md             <-- 3-engineer functional data models
-│   ├── API_INTEGRATION_GUIDE.md           <-- Backend endpoints & JWT auth
-│   └── CODING_STANDARDS_AND_GITFLOW.md    <-- TypeScript & Git conventions
+├── docs/                                  <-- Crucial Developer Documentation Suite
+│   ├── README.md                          <-- Documentation Catalog Index
+│   ├── ARCHITECTURE.md                    <-- Multi-Device Responsive Architecture & TypeScript Standards
+│   ├── MODULE_SPECIFICATIONS.md           <-- Exhaustive Technical Module Specifications
+│   └── API_INTEGRATION_GUIDE.md           <-- Backend REST Endpoints & JWT Integration
 ├── src/
 │   ├── features/                          <-- Isolated domain modules
 │   │   ├── auth/                          <-- Shared IAM (Login, Registration, Password Recovery)
@@ -76,21 +70,19 @@ ethiofarm-web/
 │   │   ├── crop-pathology/                <-- ZINEGNAW (AI Vision & Diseases)
 │   │   └── weather-livestock/             <-- BANCHAMLAK (Weather, Hazards & Livestock)
 │   ├── components/layout/                 <-- Shared responsive layout (WebNavbar, WebFooter, WebLayout)
-│   ├── context/                           <-- Global session & auth state
+│   ├── context/                           <-- Global session & auth state (AuthContext.tsx)
 │   ├── services/                          <-- Axios HTTP client envelope (apiClient.ts)
-│   ├── routes/                            <-- Central application routing
+│   ├── routes/                            <-- Central application routing (AppRoutes.tsx)
 │   ├── App.tsx                            <-- Application root
 │   └── main.tsx                           <-- Vite entry point
-├── TEAM_ASSIGNMENTS.md                    <-- Master team allocation manifest
 ├── package.json                           <-- Dependencies & build scripts
 └── vite.config.ts                         <-- Vite configuration
 ```
 
 ---
 
-## 🛡️ Zero-Conflict Collaboration Rules
+## 🛡️ Production Quality Gates
 
-1. **Strict Folder Isolation**: Each engineer works strictly inside their assigned directory in `src/features/`.
-2. **Never Touch Other Domains**: Never edit files in another developer's feature directory.
-3. **Branch from `develop`**: All feature branches start from `develop` (`git checkout -b feature/<your-name>-<feature-slug>`).
-4. **All PRs Target `develop`**: No direct commits to `main`. Every PR must pass `npm run build` with 0 errors.
+- **Zero TypeScript Compiler Errors**: Verified clean build via `tsc -b` and `vite build`.
+- **Responsive Layout**: Designed for seamless usability across 4K workstations, laptops, and tablets without mobile frame mockups.
+- **Domain Isolation**: Each feature domain is self-contained with its own pages, components, hooks, services, and TypeScript contracts.
