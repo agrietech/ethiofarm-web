@@ -1,8 +1,3 @@
-/**
- * @file useSensorTelemetry.ts
- * @owner Alen
- * @feature Farm Operations & IoT Ground Sensors
- */
 
 import { useCallback, useState } from "react";
 import { getFarmSensors } from "../services/farm.service";

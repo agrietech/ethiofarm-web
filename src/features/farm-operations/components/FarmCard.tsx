@@ -1,8 +1,3 @@
-/**
- * @file FarmCard.tsx
- * @owner Alen
- * @feature Farm Operations & IoT Ground Sensors
- */
 
 import { Link } from "react-router-dom";
 import type { Farm } from "../types/farm.types";

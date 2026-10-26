@@ -1,8 +1,3 @@
-/**
- * @file RegisterFarmPage.tsx
- * @owner Alen
- * @feature Farm Operations & IoT Ground Sensors
- */
 
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";

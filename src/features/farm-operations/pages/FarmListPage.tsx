@@ -1,8 +1,3 @@
-/**
- * @file FarmListPage.tsx
- * @owner Alen
- * @feature Farm Operations & IoT Ground Sensors
- */
 
 import { useEffect } from "react";
 import { Link } from "react-router-dom";

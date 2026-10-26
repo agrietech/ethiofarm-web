@@ -1,8 +1,3 @@
-/**
- * @file farm.service.ts
- * @owner Alen
- * @feature Farm Operations & IoT Ground Sensors
- */
 
 import { apiClient } from "@/services/apiClient";
 import type {
@@ -11,16 +6,23 @@ import type {
   RegisterFarmPayload,
 } from "../types/farm.types";
 
-export const getFarms = async (): Promise<Farm[]> =>
-  (await apiClient.get("/api/v1/farms")).data;
+export const getFarms = async (): Promise<Farm[]> => {
+  const res = await apiClient.get("/farms");
+  return res.data?.data ?? res.data ?? [];
+};
 
-export const getFarmById = async (id: string): Promise<Farm> =>
-  (await apiClient.get(`/api/v1/farms/${id}`)).data;
+export const getFarmById = async (id: string): Promise<Farm> => {
+  const res = await apiClient.get(`/farms/${id}`);
+  return res.data?.data ?? res.data;
+};
 
-export const registerFarm = async (p: RegisterFarmPayload): Promise<Farm> =>
-  (await apiClient.post("/api/v1/farms", p)).data;
+export const registerFarm = async (p: RegisterFarmPayload): Promise<Farm> => {
+  const res = await apiClient.post("/farms", p);
+  return res.data?.data ?? res.data;
+};
 
-export const getFarmSensors = async (farmId: string): Promise<SoilSensor[]> =>
-  (await apiClient.get(`/api/v1/sensors/farm/${farmId}`)).data;
+export const getFarmSensors = async (farmId: string): Promise<SoilSensor[]> => {
+  const res = await apiClient.get(`/sensors/farm/${farmId}`);
+  return res.data?.data ?? res.data ?? [];
+};
 
-export {};

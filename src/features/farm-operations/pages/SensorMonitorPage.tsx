@@ -1,8 +1,3 @@
-/**
- * @file SensorMonitorPage.tsx
- * @owner Alen
- * @feature Farm Operations & IoT Ground Sensors
- */
 
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
