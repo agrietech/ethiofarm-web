@@ -1,8 +1,3 @@
-/**
- * @file apiClient.ts
- * @description Standardized Axios client with JWT interceptors & offline fallback hooks
- */
-
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://agrietech.onrender.com/api/v1';

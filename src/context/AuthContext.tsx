@@ -1,8 +1,3 @@
-/**
- * @file AuthContext.tsx
- * @description Centralized Authentication & Jurisdiction context
- */
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { UserProfile } from '../types/common.types';
 

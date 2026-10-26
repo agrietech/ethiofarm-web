@@ -1,8 +1,3 @@
-/**
- * @file common.types.ts
- * @description Core shared type contracts for EthioFarm Smart Farming System
- */
-
 export type UserRole =
   | 'FARMER'
   | 'DEVELOPMENT_AGENT'
