@@ -144,7 +144,7 @@ export const PublicAboutPage: React.FC = () => {
               </div>
               <div className="landing-contact-item">
                 <PhoneCall size={18} color="#16A34A" />
-                <span>Farmer Toll-Free: 8440 · Support: +251 11 646 0101</span>
+                <span>Support Line: +251 11 646 0101</span>
               </div>
               <div className="landing-contact-item">
                 <Mail size={18} color="#16A34A" />

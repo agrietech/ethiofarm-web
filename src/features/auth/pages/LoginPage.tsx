@@ -273,7 +273,7 @@ export default function LoginPage() {
               To recover your EthioFarm account:
             </p>
             <ul style={{ fontSize: '0.85rem', color: '#334155', paddingLeft: '1.25rem', lineHeight: 1.6, margin: '0 0 1.25rem 0' }}>
-              <li><strong>SMS Verification:</strong> Send a verification SMS from your registered phone number to <strong>8440</strong> or request a reset PIN.</li>
+              <li><strong>Account Recovery:</strong> Request a secure password reset link or contact support at <strong>+251 11 646 0101</strong>.</li>
               <li><strong>Extension Office:</strong> Visit your local Kebele Farmer Training Center (FTC) or Woreda Agricultural Office for identity verification.</li>
             </ul>
             <button

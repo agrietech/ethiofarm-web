@@ -22,8 +22,8 @@ export const WebFooter: React.FC = () => {
             <div className="landing-footer-hotline-box">
               <PhoneCall size={18} color="#4ADE80" />
               <div>
-                <div style={{ fontSize: '0.78rem', color: '#86EFAC', fontWeight: 600 }}>Farmer Advisory Hotline</div>
-                <div className="landing-footer-hotline-num">Call Toll-Free: 8440</div>
+                <div style={{ fontSize: '0.78rem', color: '#86EFAC', fontWeight: 600 }}>Farmer Support Hotline</div>
+                <div className="landing-footer-hotline-num">+251 11 646 0101</div>
               </div>
             </div>
           </div>

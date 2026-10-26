@@ -96,8 +96,8 @@ export const PublicAdvisoriesPage: React.FC = () => {
             <div className="landing-hotline-text">
               <h4>Farmer Advisory Hotline & SMS Alerts</h4>
               <p>
-                Need direct agronomic support? Call toll-free{' '}
-                <strong>8440</strong> or text for real-time Amharic, Oromo, Tigrinya, and Somali field guidance.
+                Need direct agronomic support? Call support at{' '}
+                <strong>+251 11 646 0101</strong> or consult your local Kebele extension agent for real-time field guidance.
               </p>
             </div>
           </div>
