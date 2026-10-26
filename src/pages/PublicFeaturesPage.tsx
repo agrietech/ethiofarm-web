@@ -76,7 +76,7 @@ export const PublicFeaturesPage: React.FC = () => {
         'Automated night frost prediction 48 hours in advance for highland elevations',
         'Locust swarm tracking and migratory corridor modeling',
         'Flash flood catchment inundation modeling along river basins',
-        'Rapid alert broadcast via USSD push, SMS, and regional voice guidance',
+        'Rapid alert broadcast via SMS, mobile push, and regional voice guidance',
       ],
       actionLink: '/hazards',
       actionText: 'Open Risk Radar',
@@ -99,15 +99,15 @@ export const PublicFeaturesPage: React.FC = () => {
       actionText: 'Register Farm Parcel',
     },
     {
-      id: 'ussd-voice',
-      title: 'Inclusive USSD *844# & Multilingual Voice Gateway',
+      id: 'voice-sms',
+      title: 'Multilingual Voice & SMS Advisory Gateway',
       color: '#D97706',
       icon: Radio,
       tagline: 'Democratizing smart agriculture to smallholder farmers',
       description:
-        'Ensures no farmer is excluded due to smartphone availability, data connectivity gaps, or literacy barriers. Delivers real-time weather, market guidance, and pest emergency bulletins over basic GSM mobile networks.',
+        'Ensures no farmer is excluded due to data connectivity gaps or literacy barriers. Delivers real-time weather, market guidance, and pest emergency bulletins over standard mobile networks.',
       specs: [
-        'Interactive USSD menus accessible via shortcode *844#',
+        'Automated SMS alerts and bulletins dispatched directly to phone numbers',
         'Natural speech voice guidance in Amharic (አማርኛ), Afaan Oromoo, Tigrinya, and Somali',
         'Zero mobile data requirement — operates on standard mobile cellular signals',
         'Automated outbound voice alerts broadcast to registered farmer clusters',
@@ -204,7 +204,7 @@ export const PublicFeaturesPage: React.FC = () => {
             <div className="landing-pipeline-step">
               <div className="landing-pipeline-num">03</div>
               <h4>Extension Delivery</h4>
-              <p>Localized USSD *844#, voice advisories, and mobile web field guides.</p>
+              <p>Localized SMS bulletins, voice advisories, and mobile web field guides.</p>
             </div>
             <div className="landing-pipeline-step">
               <div className="landing-pipeline-num">04</div>

@@ -56,7 +56,7 @@ export const PublicAboutPage: React.FC = () => {
               <p className="landing-about-paragraph">
                 EthioFarm bridges the gap between state-of-the-art satellite earth observation and smallholder
                 farming plots. By equipping agricultural extension agents with offline computer vision models and
-                giving farmers real-time USSD *844# advice, EthioFarm empowers farming communities to safeguard yields,
+                giving farmers real-time SMS and mobile advice, EthioFarm empowers farming communities to safeguard yields,
                 optimize inputs, and build sustainable resilience.
               </p>
 
@@ -144,7 +144,7 @@ export const PublicAboutPage: React.FC = () => {
               </div>
               <div className="landing-contact-item">
                 <PhoneCall size={18} color="#16A34A" />
-                <span>Farmer Hotline: *844# · Support: +251 11 646 0101</span>
+                <span>Farmer Toll-Free: 8440 · Support: +251 11 646 0101</span>
               </div>
               <div className="landing-contact-item">
                 <Mail size={18} color="#16A34A" />

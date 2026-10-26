@@ -46,7 +46,7 @@ export const PublicAdvisoriesPage: React.FC = () => {
       summary:
         'Scattered hopper bands detected along coastal breeding zones moving westward toward grazing corridors. Aerial survey and biological control teams are active in monitoring routes.',
       action:
-        'Report any locust band sightings immediately to your local Kebele extension agent or dial *844#.',
+        'Report any locust band sightings immediately to your local Kebele extension agent or district agriculture office.',
       source: 'Regional Locust Surveillance Network',
     },
     {
@@ -94,10 +94,10 @@ export const PublicAdvisoriesPage: React.FC = () => {
               <PhoneCall size={28} color="#16A34A" />
             </div>
             <div className="landing-hotline-text">
-              <h4>Farmer Advisory Hotline & USSD</h4>
+              <h4>Farmer Advisory Hotline & SMS Alerts</h4>
               <p>
-                No internet connection? Dial <strong>*844#</strong> from any mobile phone or call toll-free{' '}
-                <strong>8440</strong> for real-time Amharic, Oromo, Tigrinya, and Somali agronomy guidance.
+                Need direct agronomic support? Call toll-free{' '}
+                <strong>8440</strong> or text for real-time Amharic, Oromo, Tigrinya, and Somali field guidance.
               </p>
             </div>
           </div>

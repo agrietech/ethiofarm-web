@@ -38,7 +38,7 @@ export const LandingPage: React.FC = () => {
         'AI plant pathology identification directly from mobile camera',
         'Localized micro-weather forecasts and optimal spraying windows',
         'Livestock veterinary records and disease vaccination tracking',
-        'Offline USSD *844# access without requiring internet connectivity',
+        'Offline mobile app and SMS alerts without requiring continuous internet',
       ],
       linkText: 'Sign In as Farmer',
     },
@@ -60,7 +60,7 @@ export const LandingPage: React.FC = () => {
       color: '#D97706',
       benefits: [
         'District-wide food security surveillance and harvest forecasts',
-        'USSD emergency mass advisory and SMS broadcast console',
+        'Emergency mass advisory and SMS broadcast console',
         'Multi-hazard disaster risk mitigation (drought, flood, frost)',
         'Agricultural input and fertilizer supply-chain distribution tracking',
       ],
@@ -125,13 +125,13 @@ export const LandingPage: React.FC = () => {
     },
     {
       id: 3,
-      title: 'Inclusive USSD *844# & Dialect Voice',
+      title: 'Multilingual Voice & SMS Advisory',
       icon: Radio,
       color: '#D97706',
       summary:
-        'Zero-barrier rural accessibility: farmers on basic phones dial shortcode *844# to receive instant AI crop advice, weather forecasts, and market prices in Amharic, Afaan Oromoo, Tigrinya, and Somali.',
-      metric: 'Offline Access',
-      submetric: 'Works on any basic GSM phone without internet connection',
+        'Zero-barrier rural accessibility: farmers receive instant automated crop advice, weather forecasts, and market notices via SMS and voice guidance in Amharic, Afaan Oromoo, Tigrinya, and Somali.',
+      metric: 'Rural Access',
+      submetric: 'Works across standard mobile cellular networks without high-speed data',
     },
   ];
 
@@ -141,8 +141,8 @@ export const LandingPage: React.FC = () => {
       a: 'Yes, completely accessible. Farmers can register parcels, access AI crop diagnostics, and receive weather alerts without any subscription barrier.',
     },
     {
-      q: 'Can farmers use EthioFarm on basic feature phones without internet?',
-      a: 'Yes! Farmers dial the shortcode *844# on any basic mobile phone to query localized weather, receive pest emergency warnings, and listen to voice advisories in their regional language.',
+      q: 'Can farmers receive advisories in rural areas with low connectivity?',
+      a: 'Yes! Farmers receive localized weather bulletins, pest emergency warnings, and audio advisories directly via SMS and localized voice calls in their regional language.',
     },
     {
       q: 'How accurate is the AI crop leaf disease scanner?',
@@ -150,7 +150,7 @@ export const LandingPage: React.FC = () => {
     },
     {
       q: 'Which languages are supported on the platform?',
-      a: 'The platform natively supports Amharic (አማርኛ), Afaan Oromoo, Tigrinya (ትግርኛ), Somali (Soomaali), and English across web, mobile, and USSD/voice channels.',
+      a: 'The platform natively supports Amharic (አማርኛ), Afaan Oromoo, Tigrinya (ትግርኛ), Somali (Soomaali), and English across web, mobile, SMS, and voice channels.',
     },
     {
       q: 'How do agricultural officers and DAs get administrative access?',
@@ -183,7 +183,7 @@ export const LandingPage: React.FC = () => {
           <p className="landing-hero-subtitle">
             Connecting smallholder farmers, extension agents, and agronomic researchers with real-time AI
             plant pathology vision, IoT micro-climate telemetry, Sentinel-2 satellite vegetation index, and
-            offline USSD *844# early warning bulletins.
+            automated SMS and mobile early warning bulletins.
           </p>
 
           <div className="landing-hero-actions">
@@ -236,7 +236,7 @@ export const LandingPage: React.FC = () => {
               <div className="landing-kpi-item">
                 <div className="landing-kpi-value" style={{ color: '#DC2626' }}>&lt; 30 sec</div>
                 <div className="landing-kpi-label">Emergency Broadcast</div>
-                <div className="landing-kpi-sub">USSD *844#, SMS & Multi-Dialect Voice</div>
+                <div className="landing-kpi-sub">SMS, Push Alerts & Multilingual Voice</div>
               </div>
             </div>
           </div>

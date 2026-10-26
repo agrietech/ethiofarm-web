@@ -15,7 +15,7 @@ export const WebFooter: React.FC = () => {
             </div>
             <p className="landing-footer-tagline">
               Smart Agriculture & Climate-Resilience Platform connecting smallholder farmers,
-              agricultural extension agents, and agronomists with AI crop vision, IoT telemetry, and offline USSD.
+              agricultural extension agents, and agronomists with AI crop vision, IoT telemetry, and offline mobile tools.
             </p>
 
             {/* Helpline Box */}
@@ -23,7 +23,7 @@ export const WebFooter: React.FC = () => {
               <PhoneCall size={18} color="#4ADE80" />
               <div>
                 <div style={{ fontSize: '0.78rem', color: '#86EFAC', fontWeight: 600 }}>Farmer Advisory Hotline</div>
-                <div className="landing-footer-hotline-num">Dial *844# or Call 8440 (Toll-Free)</div>
+                <div className="landing-footer-hotline-num">Call Toll-Free: 8440</div>
               </div>
             </div>
           </div>
