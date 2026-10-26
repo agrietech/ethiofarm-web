@@ -19,9 +19,6 @@ import type {
 } from '../types/weather-livestock.types';
 import { useAuth } from '../../../context/AuthContext';
 
-// ---------------------------------------------------------------------------
-// Filter options — mirrors Flutter AlertFilterChips
-// ---------------------------------------------------------------------------
 
 const SEVERITY_OPTIONS: Array<{ value: AlertSeverity | 'ALL'; label: string }> = [
   { value: 'ALL', label: 'All Levels' },
@@ -46,7 +43,6 @@ const ALL_HAZARD_TYPES: HazardType[] = [
 ];
 const ALL_SEVERITIES: AlertSeverity[] = ['LOW', 'MODERATE', 'HIGH', 'CRITICAL'];
 
-// Alert detail modal
 const AlertDetailModal: React.FC<{
   alert: AlertModel;
   onClose: () => void;
@@ -148,7 +144,6 @@ const AlertDetailModal: React.FC<{
   );
 };
 
-// Create alert form — mirrors Flutter CreateAlertScreen
 const CreateAlertForm: React.FC<{
   onCreated: (alert: AlertModel) => void;
   onCancel: () => void;
@@ -282,9 +277,6 @@ const CreateAlertForm: React.FC<{
   );
 };
 
-// ---------------------------------------------------------------------------
-// Main page
-// ---------------------------------------------------------------------------
 
 export const HazardsEarlyWarningPage: React.FC = () => {
   const { user } = useAuth();

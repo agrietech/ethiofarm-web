@@ -18,7 +18,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Scaffold: Validate token on app boot
     const storedUser = localStorage.getItem('ethiofarm_user');
     if (token && storedUser) {
       try {

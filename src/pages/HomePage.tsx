@@ -9,10 +9,6 @@ import { useAuth } from '../context/AuthContext';
 import { getWeatherForecast } from '../features/weather-livestock/services/weather-livestock.service';
 import type { WeatherForecast } from '../features/weather-livestock/types/weather-livestock.types';
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 function getGreeting(): string {
   const h = new Date().getHours();
   if (h >= 5 && h < 12) return 'Good morning';
@@ -26,10 +22,6 @@ const CONDITION_EMOJI: Record<string, string> = {
   frost: '❄️', fog: '🌫️',
 };
 const condEmoji = (type?: string) => CONDITION_EMOJI[type ?? ''] ?? '🌤️';
-
-// ---------------------------------------------------------------------------
-// Feature cards
-// ---------------------------------------------------------------------------
 
 const FEATURE_CARDS = [
   {
@@ -118,10 +110,6 @@ const FEATURE_CARDS = [
     comingSoon: true,
   },
 ];
-
-// ---------------------------------------------------------------------------
-// Live Weather Banner — mirrors Flutter HomeCommandCenterHero weather card
-// ---------------------------------------------------------------------------
 
 const LiveWeatherBanner: React.FC = () => {
   const [weather, setWeather] = useState<WeatherForecast | null>(null);
@@ -270,10 +258,6 @@ const LiveWeatherBanner: React.FC = () => {
   );
 };
 
-// ---------------------------------------------------------------------------
-// Page
-// ---------------------------------------------------------------------------
-
 export const HomePage: React.FC = () => {
   const { user } = useAuth();
   const userName = user?.fullName ?? 'Agricultural Leader';
@@ -281,8 +265,6 @@ export const HomePage: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-
-      {/* ── Tech Hero Banner ── */}
       <div style={{
         background: 'linear-gradient(135deg, #0F2E14, #1B5E20, #004D40)',
         borderRadius: 'var(--radius-lg)',
@@ -291,7 +273,6 @@ export const HomePage: React.FC = () => {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Faint satellite bg */}
         <div style={{
           position: 'absolute', right: -20, top: -20,
           fontSize: 160, opacity: 0.05, lineHeight: 1,
@@ -300,13 +281,11 @@ export const HomePage: React.FC = () => {
           🛰️
         </div>
 
-        {/* Live pill */}
         <div className="live-pill" style={{ marginBottom: '1rem' }}>
           <span className="live-dot" />
           SENTINEL-2 · LIVE TELEMETRY
         </div>
 
-        {/* Time-of-day greeting — matches Flutter HomeCommandCenterHero */}
         <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.72)', margin: 0, fontWeight: 500 }}>
           {greeting},
         </p>
@@ -314,11 +293,9 @@ export const HomePage: React.FC = () => {
           {userName}
         </h2>
 
-        {/* Live weather banner — mirrors Flutter daily temperature banner */}
         <LiveWeatherBanner />
       </div>
 
-      {/* ── AI Assistant card ── */}
       <div className="ai-feature-card" style={{ flexDirection: 'row', alignItems: 'center', gap: '1rem' }}>
         <div style={{
           width: 48, height: 48, borderRadius: '50%',
@@ -341,7 +318,6 @@ export const HomePage: React.FC = () => {
         }}>Voice AI</span>
       </div>
 
-      {/* ── Agro-Intelligence Modules grid ── */}
       <div>
         <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 0.875rem' }}>
           Agro-Intelligence Modules
@@ -384,7 +360,6 @@ export const HomePage: React.FC = () => {
         </div>
       </div>
 
-      {/* ── System status strip ── */}
       <div style={{
         background: 'var(--surface)', border: '1px solid var(--border)',
         borderRadius: 'var(--radius)', padding: '0.875rem 1.25rem',
