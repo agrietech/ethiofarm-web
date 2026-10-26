@@ -1,8 +1,3 @@
-/**
- * @file WebLayout.tsx
- * @description Master responsive web layout shell for all devices (Desktop, Tablet, Large Displays)
- */
-
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { WebNavbar } from './WebNavbar';

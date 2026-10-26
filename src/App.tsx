@@ -1,8 +1,3 @@
-/**
- * @file App.tsx
- * @description Application root — mounts router and auth context
- */
-
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';

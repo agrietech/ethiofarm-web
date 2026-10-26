@@ -1,10 +1,3 @@
-/**
- * @file HomePage.tsx
- * @description EthioFarm web portal home — mirrors Flutter HomeScreen
- *   + Time-of-day greeting
- *   + Live weather banner from /api/v1/weather/forecast
- */
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
