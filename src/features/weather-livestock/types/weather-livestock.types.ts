@@ -1,8 +1,4 @@
 
-// ---------------------------------------------------------------------------
-// Weather
-// ---------------------------------------------------------------------------
-
 export interface HourlyWeatherPoint {
   time: string;
   hourLabel: string;
@@ -57,10 +53,6 @@ export interface WeatherForecast {
   daily: DailyWeatherPoint[];
 }
 
-// ---------------------------------------------------------------------------
-// Alerts (Early Warning)
-// ---------------------------------------------------------------------------
-
 export type HazardType =
   | 'DROUGHT'
   | 'FLOOD'
@@ -110,10 +102,6 @@ export interface AlertStatistics {
   byHazardType: Record<string, number>;
 }
 
-// ---------------------------------------------------------------------------
-// Risk Assessments
-// ---------------------------------------------------------------------------
-
 export type RiskLevel = 'LOW' | 'MODERATE' | 'HIGH' | 'CRITICAL';
 
 export interface RiskAssessment {
@@ -134,10 +122,6 @@ export interface RiskStatistics {
   bySeverity: Record<RiskLevel, number>;
   mostAffectedWoreda?: string;
 }
-
-// ---------------------------------------------------------------------------
-// Animal Health & Livestock
-// ---------------------------------------------------------------------------
 
 export type LivestockSpecies = 'CATTLE' | 'SHEEP' | 'GOAT' | 'CAMEL' | 'POULTRY' | 'EQUINE';
 export type HealthStatus = 'HEALTHY' | 'SICK' | 'QUARANTINED';

@@ -23,7 +23,7 @@ apiClient.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('ethiofarm_token');
-      // Optional: window.location.href = '/login';
+      localStorage.removeItem('ethiofarm_user');
     }
     return Promise.reject(error);
   }

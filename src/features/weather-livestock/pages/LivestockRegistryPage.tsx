@@ -24,9 +24,6 @@ import type {
   NewLivestockPayload,
 } from '../types/weather-livestock.types';
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
 
 const SEV_COLOR: Record<string, string> = {
   LOW: '#15803D', MODERATE: '#B45309', HIGH: '#C2410C', CRITICAL: '#991B1B',
@@ -59,9 +56,6 @@ const ProgressBar: React.FC<{ value: number; max: number; color?: string }> = ({
 
 type Tab = 'outbreaks' | 'vaccines' | 'pasture';
 
-// ---------------------------------------------------------------------------
-// Report Outbreak Form
-// ---------------------------------------------------------------------------
 
 const PRESET_DISEASES = [
   { label: 'FMD (የአፍና እግር)', disease: 'Foot & Mouth Disease', animal: 'CATTLE', sev: 'HIGH' },
@@ -70,9 +64,6 @@ const PRESET_DISEASES = [
   { label: 'Newcastle (የዶሮ ቸነፈር)', disease: 'Newcastle Disease', animal: 'POULTRY', sev: 'HIGH' },
 ];
 
-// ---------------------------------------------------------------------------
-// Main Component
-// ---------------------------------------------------------------------------
 
 export const LivestockRegistryPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('outbreaks');
@@ -84,7 +75,6 @@ export const LivestockRegistryPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Report outbreak form
   const [showOutbreakForm, setShowOutbreakForm] = useState(false);
   const [obDisease, setObDisease] = useState('Foot & Mouth Disease');
   const [obAnimal, setObAnimal] = useState<LivestockSpecies>('CATTLE');
@@ -96,7 +86,6 @@ export const LivestockRegistryPage: React.FC = () => {
   const [obSubmitting, setObSubmitting] = useState(false);
   const [obError, setObError] = useState<string | null>(null);
 
-  // Register livestock form
   const [showLivestockForm, setShowLivestockForm] = useState(false);
   const [lsAnimal, setLsAnimal] = useState<LivestockSpecies>('CATTLE');
   const [lsCount, setLsCount] = useState('');

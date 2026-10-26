@@ -3,9 +3,6 @@ import React from 'react';
 import { AlertTriangle, Flame, Waves, Snowflake, Bug, Sun, Leaf } from 'lucide-react';
 import type { AlertModel, AlertSeverity, HazardType } from '../types/weather-livestock.types';
 
-// ---------------------------------------------------------------------------
-// Config maps — mirrors AppTheme.getRiskColor() + AlertsListScreen colors
-// ---------------------------------------------------------------------------
 
 const SEVERITY_CONFIG: Record<AlertSeverity, {
   bg: string; border: string; iconBg: string; text: string; label: string;
@@ -33,9 +30,6 @@ const formatDate = (iso: string): string => {
   } catch { return iso; }
 };
 
-// ---------------------------------------------------------------------------
-// Component
-// ---------------------------------------------------------------------------
 
 interface HazardAlertCardProps {
   alert: AlertModel;

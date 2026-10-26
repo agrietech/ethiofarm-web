@@ -16,9 +16,6 @@ import type {
   AnimalHealthStats,
 } from '../types/weather-livestock.types';
 
-// ---------------------------------------------------------------------------
-// Weather  —  /api/v1/weather
-// ---------------------------------------------------------------------------
 
 export const getWeatherForecast = async (params?: {
   woredaId?: string;
@@ -33,9 +30,6 @@ export const getWeatherForecast = async (params?: {
   return res.data.data;
 };
 
-// ---------------------------------------------------------------------------
-// Alerts  —  /api/v1/alerts
-// ---------------------------------------------------------------------------
 
 export const getAlerts = async (): Promise<AlertModel[]> => {
   const res = await apiClient.get<ApiResponse<AlertModel[]>>('/alerts');
@@ -70,9 +64,6 @@ export const deriveAlertStats = (alerts: AlertModel[]): AlertStatistics => {
   };
 };
 
-// ---------------------------------------------------------------------------
-// Risk Assessments  —  /api/v1/risk-assessments
-// ---------------------------------------------------------------------------
 
 export const getLatestRiskAssessments = async (): Promise<RiskAssessment[]> => {
   const res = await apiClient.get<ApiResponse<RiskAssessment[]>>('/risk-assessments/latest');
@@ -91,9 +82,6 @@ export const getRiskStatistics = async (): Promise<RiskStatistics> => {
   return res.data.data;
 };
 
-// ---------------------------------------------------------------------------
-// Animal Health  —  /api/v1/animal-health
-// ---------------------------------------------------------------------------
 
 export const getLivestock = async (woredaId?: string): Promise<LivestockRecord[]> => {
   const res = await apiClient.get<ApiResponse<LivestockRecord[]>>(

@@ -3,7 +3,6 @@ import React from 'react';
 import { Thermometer, Droplets, Wind, Leaf, Sun } from 'lucide-react';
 import type { WeatherForecast } from '../types/weather-livestock.types';
 
-// Condition type → emoji
 const CONDITION_EMOJI: Record<string, string> = {
   sunny: '☀️', partlyCloudy: '⛅', cloudy: '☁️',
   rainy: '🌧️', drizzle: '🌦️', thunderstorm: '⛈️',
@@ -19,7 +18,6 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ forecast }) => {
   const { locationName, current, hourly, daily } = forecast;
   const next24 = hourly.slice(0, 24);
 
-  // Scale bars by temp range
   const temps = next24.map((h) => h.temperatureC);
   const minT = Math.min(...temps);
   const maxT = Math.max(...temps);
@@ -27,8 +25,6 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ forecast }) => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-
-      {/* ── Current weather hero card — blue gradient matching Flutter WeatherScreen ── */}
       <div className="weather-hero">
         <div className="live-pill" style={{ marginBottom: '0.875rem' }}>
           <span className="live-dot" style={{ background: '#38BDF8' }} />
@@ -54,7 +50,6 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ forecast }) => {
           )}
         </div>
 
-        {/* Stats row */}
         <div className="weather-stats-row">
           <div className="weather-stat">
             <Droplets size={18} color="rgba(255,255,255,0.85)" />
@@ -95,7 +90,6 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ forecast }) => {
         </div>
       </div>
 
-      {/* ── 24-hour horizontal forecast curve ── */}
       {next24.length > 0 && (
         <div className="section-card">
           <h4 className="section-label">24-Hour Forecast</h4>
@@ -122,7 +116,6 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ forecast }) => {
         </div>
       )}
 
-      {/* ── 7-day forecast strip ── */}
       {daily.length > 0 && (
         <div className="section-card">
           <h4 className="section-label">7-Day Outlook</h4>
